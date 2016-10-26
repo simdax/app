@@ -5,7 +5,7 @@ When you code, you open a file, open parenthesis, and obtain something
 
 After, you do objects, prototypes, or whatever, but you have to open a new file, recompile etc, which is somewhat frustrating in your workflow
 
-Loading a file with ".load" returns the last expression, like any func.
+Loading a file with ".load" returns the last expression, like any function.
 
 But can you manage it better ? Can you use yout whole folder like any other object ?
 
