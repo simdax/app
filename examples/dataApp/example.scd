@@ -1,5 +1,5 @@
 (
-j=(a:7, b:5);
+j=(a:8, b:5);
 Bob.save(j)
 )
 
@@ -18,7 +18,8 @@ a= ProtoGui()%=
 gui:EZSlider,opt:(controlSpec:[0,12].asSpec));
 (a.copy.put(\model,\a)).go();
 (a.copy.put(\model,\b)).go();
-Button(w).action_{Bob.save(b)};
+Button(w).string_("save").action_{Bob.save(b)};
 Environment.pop;
 )
+
 
