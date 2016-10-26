@@ -62,7 +62,28 @@ DataAPP : APP {
 		expandedFileName = filename ?? (this.root ++ "/archive.sctxar");
 		Library.at(this.name).writeArchive(expandedFileName);
 	}
-	*put{ arg ... args;
+	*save{ arg ... args;
 		Library.put(this.name, *args)
 	}
+}
+
+SaveAPP : DataAPP{
+	classvar <saveDir, <nbSaves;
+
+	*initClass{
+		this.subclasses.do(_.createSaveDir);
+	} 
+	*createSaveDir{
+		//if already exists, do nothing
+		saveDir=(this.root+/+"saves").mkdir;
+		nbSaves=PathName(saveDir).files.size
+	}	
+	*write{ 
+		super.write(saveDir+/+nbSaves++".sctxar");
+		nbSaves=nbSaves+1;
+	}
+	*open{
+		EZListView().items_(PathName(saveDir).files);
+	}
+	
 }
