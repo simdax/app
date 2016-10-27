@@ -1,5 +1,3 @@
-
-
 APP{
 	*root{
 		^this.filenameSymbol.asString.dirname;
@@ -8,10 +6,11 @@ APP{
 		// TODO search in folder
 		var file = (this.root+/+args[0]++".scd");
 		^
-		try{file.load.value(*args.drop(1))}
-		?? {
-			Error("no File at : "++file).throw
-		}
+		try({file.load.value(*args.drop(1))}, 
+			{ arg error;
+				error.errorString.postln;
+				Error("bug with file : "++file).throw
+			})
 	}
 	*entries{
 		^PathName(this.root).entries.collect(_.absolutePath)
@@ -35,5 +34,40 @@ APP{
 		};
 		^f.value(this.root)
 	}
+	// gotAppFile{
+	// 	^
+	// }
 }
+
+// for very lazy persons (aka me). It detects the actual app in the folder
+
+Here{
+	*doesNotUnderstand{ arg selector ... args;
+		// we parse the actual dir
+		var loc=thisProcess.nowExecutingPath.dirname;
+		//		var loc=Poly.root;
+		var paths=PathName(loc).files.select({|x| x.extension=="sc" });
+		var res=paths.collect{ |path|
+			var lines=
+			File.open(path.absolutePath,"r")
+			.readAllString.split(Char.nl);
+			path ->
+			{var line;
+				line=lines.detectIndex{arg x; x.contains(": APP")};
+				line !?
+				{ lines[line].split($ )[0] } ?? {nil}
+			}.value
+		}.reject{|x| x.value.isNil};
+		// with multi app ???		
+		if(res.size>1, {
+			^Error("HERE is not clear enough. Here are your choices :"++ res)
+			.throw
+		},{
+			^res[0].value.asSymbol.asClass.perform(selector, *args)
+		});
+		
+		
+	}
+}
+
 
