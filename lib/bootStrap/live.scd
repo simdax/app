@@ -1,19 +1,27 @@
 {
-	arg path=thisProcess.nowExecutingPath;
-	var base=
-	(app:{arg s; s.name.capitalize++" : APP {}"});
+	arg path=thisProcess.nowExecutingPath,method=\write;
+	var base=BootStrap.base;
 	var parent=
 	(
 		path:path,
-		name:{arg s; s.path.dirname.basename},
 		dirname:{arg s; s.path.dirname},
-		asFile:{arg s,p; s.dirname+/+p++".sc"},
-		write:{arg s,name,content;
-			File.open(s.asFile(name),"w").write(content).close}
+		name:{arg s; s.dirname.basename},
 	);
-	var r=base =% parent;
-	r.keysValuesDo { |k,v|
-		r.write(k.asString,v.value(r))
-	};
-	"bootStrap executed".inform
+	var proto=
+	(
+		files:(
+			asFile:{arg s,p; s.dirname+/+p++".sc"},
+			write:{arg s,name,content;
+				File.open(s.asFile(name),"w").write(content).close},
+			delete:{arg s,name; File.delete(s.asFile(name))}
+		),
+		dirs:(
+			asFile:{arg s,p; s.dirname+/+p},
+			write:{arg s,name; s.asFile(name).mkdir},
+			delete:{arg s,name; ("rm -R "++s.asFile(name)).unixCmd}
+		)
+	);
+
+	BootStrap.perform(method,parent.dirname,base,parent,proto)
 }
+
