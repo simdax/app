@@ -8,7 +8,7 @@ APP{
 		// TODO search in folder
 		var file = (this.root+/+args[0]++".scd");
 		^
-		try{file.load}
+		try{file.load.value(*args.drop(1))}
 		?? {
 			Error("no File at : "++file).throw
 		}
