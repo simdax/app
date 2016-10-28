@@ -1,13 +1,10 @@
-Merde.write
-Merde.read(Merde.root+/+"data.scd")
-Merde.read
-Library.postTree
+// without data, it will just save currentEnvir
 
-EZListView().items_(
-	["niou Save" -> {Merde.default}] ++
-	PathName(Merde.saveDir).files.collect({|x| 
-		x.fileName -> {Merde.read(x.absolutePath)}
-	})
+(
+~a=8; ~cac=79;
+Merde.saveAs()
 )
+w=FlowView();
+Merde.panel
 
-;
+

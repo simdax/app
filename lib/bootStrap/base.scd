@@ -1,4 +1,21 @@
+//TODO generate doc 
+{
+	(
+		files:(
+			app:{arg s; [ s.name.capitalize ++" : APP {}",'sc']},
+		),
+		dirs:(
+			ext:(dirs:(methodOverwrite:())),
+			helpSource:(),  //files:(rien:["test",'dutout'])),
+			lib:()
+		)
+	)
+}
+//files:(sc:(app:),quark:{})
+/*
 (
-files:(app:{arg s; s.name.capitalize ++" : APP {}"}),
-dirs:(ext:{},methodOverwrite:{},helpSource:{})
+files:
+
 )
+
+*/

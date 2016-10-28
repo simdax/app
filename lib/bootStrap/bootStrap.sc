@@ -14,7 +14,7 @@ BootStrap : APP{
 		BootStrap.live(here,\write)
 	}
 	*clear{ arg name;
-		here=this.find(name);
+		var here=this.find(name);
 		BootStrap.live(here,\clean)
 	}
 }

@@ -13,9 +13,10 @@
 	var proto=
 	(
 		files:(
-			asFile:{arg s,p; s.root+/+p++".sc"},
+			asFile:{arg s,p,ext="sc"; s.root+/+p++"."++ext},
 			write:{arg s,name,content;
-				File.open(s.asFile(name),"w").write(content).close},
+				content=content.asArray;
+				File.open(s.asFile(name,content[1]),"w").write(content[0]).close},
 			delete:{arg s,name; File.delete(s.asFile(name))}
 		),
 		dirs:(
@@ -24,7 +25,6 @@
 			delete:{arg s,name; ("rm -R "++s.asFile(name)).unixCmd}
 		)
 	);
-
 	BootStrap.perform(method,parent.root,base,parent,proto)
 }
 

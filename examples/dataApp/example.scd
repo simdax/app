@@ -18,8 +18,6 @@ a= ProtoGui()%=
 gui:EZSlider,opt:(controlSpec:[0,12].asSpec));
 (a.copy.put(\model,\a)).go();
 (a.copy.put(\model,\b)).go();
-Button(w).string_("save").action_{Bob.save(b)};
 Environment.pop;
 )
-
 

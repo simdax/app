@@ -24,5 +24,8 @@ ArchiveAPP : APP {
 	*save{ arg ... args;
 		Library.put(this.name, *args)
 	}
+	*clear{
+		Library.put(this.name, ())
+	}
 }
 
