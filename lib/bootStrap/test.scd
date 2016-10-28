@@ -1,4 +1,4 @@
 (
 BootStrap.live
-BootStrap.live(thisProcess.nowExecutingPath,\clear)
+BootStrap.live(thisProcess.nowExecutingPath,\clean)
 )
