@@ -1,6 +1,5 @@
 {
 	arg path=thisProcess.nowExecutingPath,method=\write;
-	var base=BootStrap.base;
 	var parent=
 	(
 		path:path,
@@ -10,6 +9,7 @@
 		},
 		name:{arg s; s.root.basename},
 	);
+	var base=BootStrap.base(parent.name);
 	var proto=
 	(
 		files:(
@@ -27,5 +27,4 @@
 	);
 	BootStrap.perform(method,parent.root,base,parent,proto)
 }
-
 

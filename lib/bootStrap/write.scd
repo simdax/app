@@ -17,8 +17,7 @@
 					r.write(k.asString.postln);
 					if(v.value(r)!=())
 					{				
-						f.value(path+/+k,v.value(r),
-							parent.copy.path_(path+/+k),proto)
+						f.value(path+/+k,v.value(r),parent.copy.path_(path+/+k),proto)
 					};
 				};		
 			},

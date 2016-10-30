@@ -43,8 +43,8 @@ APP{
 
 Here{
 	*doesNotUnderstand{ arg selector ... args;
-		// we parse the actual dir
-		var loc=thisProcess.nowExecutingPath.dirname;
+		// we parse the dir of the call
+		var loc=thisProcess.nowExecutingPath.postln.dirname.postln;
 		//		var loc=Poly.root;
 		var paths=PathName(loc).files.select({|x| x.extension=="sc" });
 		var res=paths.collect{ |path|

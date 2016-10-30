@@ -1,21 +1,18 @@
-//TODO generate doc 
 {
+	arg n; var name=n.capitalize;
+	var sig=Here.signature.asString;
 	(
 		files:(
-			app:{arg s; [ s.name.capitalize ++" : APP {}",'sc']},
-		),
-		dirs:(
-			ext:(dirs:(methodOverwrite:())),
-			helpSource:(),  //files:(rien:["test",'dutout'])),
-			lib:()
-		)
+			app:[  (name++" : APP {"++Char.nl++
+				"*new{"++name++".main}"++Char.nl++"}")
+				,'sc'],
+			main:[{},'scd']
+	).put(name.asSymbol,[sig,'quark']),
+	dirs:(
+		ext:(dirs:(methodOverwrite:())),
+		helpSource:(files:(rien:["help",'schelp'])),
+		lib:()
+	)
 	)
 }
-//files:(sc:(app:),quark:{})
-/*
-(
-files:
-
-)
-
-*/
+//TODO generate doc 
