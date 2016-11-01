@@ -13,7 +13,7 @@ APP{
 		^
 		try({file.load.valueIfNeeded(*args)}, 
 			{ arg error;
-				error.errorString.postln;
+				error.errorString.warn;
 				Error("bug with file : "++file).throw
 			})
 	}
@@ -76,7 +76,7 @@ Here{
 			}.value
 		}.reject{|x| x.value.isNil};
 		"classe trouvée : ".post;
-		^res[0].value.asSymbol.postln.asClass.perform(selector, *args)
+		^res[0].value.asSymbol.inform.asClass.perform(selector, *args)
 
 		
 		
