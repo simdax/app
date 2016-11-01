@@ -2,11 +2,16 @@ APP{
 	*root{
 		^this.filenameSymbol.asString.dirname;
 	}
-	*doesNotUnderstand{ arg ...args;
+	*doesNotUnderstand{ arg selector ... args;
 		// TODO search in folder
-		var file = (this.root+/+args[0]++".scd");
+		var file =
+		PathName(this.root)
+		.deepFiles() // it
+		// TODO to avoid confusion, tell if multiple name ?
+		.detect{arg x; x.fileName==(selector++".scd") }
+		.absolutePath;
 		^
-		try({file.load.value(*args.drop(1))}, 
+		try({file.load.valueIfNeeded(*args)}, 
 			{ arg error;
 				error.errorString.postln;
 				Error("bug with file : "++file).throw
@@ -44,10 +49,22 @@ APP{
 Here{
 	*doesNotUnderstand{ arg selector ... args;
 		// we parse the dir of the call
-		var loc=thisProcess.nowExecutingPath.postln.dirname.postln;
+		var loc=thisProcess.nowExecutingPath.dirname;
 		//		var loc=Poly.root;
-		var paths=PathName(loc).files.select({|x| x.extension=="sc" });
-		var res=paths.collect{ |path|
+		var recursionLevel=0; // check upperDir
+		var recurF={
+			arg l=loc; var res;
+			res=PathName(l).files.select({|x|
+				x.fileName=="app.sc" })
+			??? {
+				recursionLevel=recursionLevel+1;
+				if(recursionLevel < 2 )
+				{recurF.value((l+/+".."))}
+				{^"rien trouvé".warn}
+			} 
+		};
+		var paths=recurF.value;
+		var res=paths.asArray.collect{ |path|
 			var lines=
 			File.open(path.absolutePath,"r")
 			.readAllString.split(Char.nl);
@@ -58,13 +75,9 @@ Here{
 				{ lines[line].split($ )[0] } ?? {nil}
 			}.value
 		}.reject{|x| x.value.isNil};
-		// with multi app ???		
-		if(res.size>1, {
-			^Error("HERE is not clear enough. Here are your choices :"++ res)
-			.throw
-		},{
-			^res[0].value.asSymbol.asClass.perform(selector, *args)
-		});
+		"classe trouvée : ".post;
+		^res[0].value.asSymbol.postln.asClass.perform(selector, *args)
+
 		
 		
 	}
@@ -74,6 +87,8 @@ Here{
 
 IO {
 
-	%%{^2}
+	%%{arg a; ^a}
 }
+
+
 
