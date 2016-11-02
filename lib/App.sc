@@ -18,7 +18,7 @@ APP{
 			})
 	}
 	*entries{
-		^PathName(this.root).entries.collect(_.absolutePath)
+		^PathName(this.root).entries.collect(_.fileName)
 	}
 	*all{
 		^this.entries.do(_.load)
