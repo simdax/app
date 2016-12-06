@@ -10,7 +10,9 @@
 	).put(name.asSymbol,[sig,'quark']),
 	dirs:(
 		ext:(dirs:(SystemOverwrites:())),
-		helpSource:(files:(rien:["help",'schelp'])),
+		helpSource:(files:(
+			tests:[name++"()",'scd']
+		)),
 		lib:()
 	)
 	)

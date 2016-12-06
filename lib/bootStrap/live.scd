@@ -25,6 +25,7 @@
 			delete:{arg s,name; ("rm -R "++s.asFile(name)).unixCmd}
 		)
 	);
-	BootStrap.perform(method,parent.root,base,parent,proto)
+	BootStrap.perform(method,parent.root,base,parent,proto);
+	thisProcess.platform.recompile;
 }
 
